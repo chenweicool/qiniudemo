@@ -34,6 +34,7 @@ public class BasicUploadDemo {
     //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
     Configuration c = new Configuration(Region.autoRegion());
 
+
     //创建上传对象
     UploadManager uploadManager = new UploadManager(c);
 

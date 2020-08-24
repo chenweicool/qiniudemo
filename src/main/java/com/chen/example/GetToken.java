@@ -1,23 +1,27 @@
 package com.chen.example;
 
-import com.chen.Utils.UserConstant;
 import com.google.gson.Gson;
-import com.qiniu.http.Client;
 import com.qiniu.util.Auth;
-import com.qiniu.util.StringMap;
+import com.qiniu.util.UrlSafeBase64;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @Author Chen
- * @Date 2020/7/26 16:29
- * 1.异步抓取的demo的实现
- * 主要是他的accesstoken的生成一定要懂，一定要会。
- * 测试通过
- **/
-public class FetchDemo {
-    public static void main(String[] args) throws Exception {
+public class GetToken {
+    public static void main(String[] args) {
+
+        // 生成Url 防水印
+       String base = UrlSafeBase64.encodeToString("shuiyin.jpeg");
+
+        System.out.println(base);
+
+        // 编辑原图
+        String base11 = UrlSafeBase64.encodeToString("chenweiwei.jpg");
+        System.out.println(base11);
+
+        //String unBase = UrlSafeBase64.decode(base.getBytes());
+
 
         //要上传的空间
         String bucketname = "chenweitest";
@@ -26,7 +30,7 @@ public class FetchDemo {
         // 构造post请求body
         Gson gson = new Gson();
         Map<String, String> m = new HashMap();
-       // m.put("url", "http://cww.huangbowei.com/chenweiwei.jpg");
+        // m.put("url", "http://cww.huangbowei.com/chenweiwei.jpg");
         m.put("id", "xxxx");
         String paraR = gson.toJson(m);
         System.out.println(paraR);
@@ -39,14 +43,8 @@ public class FetchDemo {
         String accessToken = (String) auth.authorizationV2(url, "POST", bodyByte, "application/json")
                 .get("Authorization");
         System.out.println(accessToken);
-        Client client = new Client();
-        StringMap headers = new StringMap();
-        headers.put("Authorization", accessToken);
-        System.out.println();
-        try {
-            com.qiniu.http.Response resp = client.post(url, bodyByte, headers, Client.JsonMime);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
+
+
+        
     }
 }

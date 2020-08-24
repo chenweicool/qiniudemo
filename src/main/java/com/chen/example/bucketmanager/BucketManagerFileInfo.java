@@ -10,6 +10,8 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 
+import javax.jws.soap.SOAPBinding;
+
 /**
  * @Author Chen
  * @Date 2020/7/26 18:29
@@ -27,14 +29,19 @@ public class BucketManagerFileInfo {
 
         //实例化一个BucketManager对象
         BucketManager bucketManager = new BucketManager(auth, c);
+
         //要测试的空间和key，并且这个key在你空间中存在
         String bucket = "chenweitest";
-        String key = "view";
+        String key = "test22.png";
+
         try {
             //调用stat()方法获取文件的信息
             FileInfo info = bucketManager.stat(bucket, key);
-            System.out.println(info.hash);
-            System.out.println(info.key);
+            System.out.println("文件的hash值"+info.hash);
+            System.out.println("文件的大小:"+info.fsize);
+
+            System.out.println("文件的上传时间："+info.putTime);
+            System.out.println("文件的key"+info.key);
         } catch (QiniuException e) {
             //捕获异常信息
             Response r = e.response;
